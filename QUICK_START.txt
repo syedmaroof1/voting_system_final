@@ -1,0 +1,89 @@
+╔══════════════════════════════════════════════════════════════╗
+║          🗳️  VOTING SYSTEM - QUICK START GUIDE              ║
+╚══════════════════════════════════════════════════════════════╝
+
+📋 STEP-BY-STEP IN VS CODE:
+
+1. Open Terminal in VS Code
+   → Press: Ctrl + `
+
+2. Install Dependencies (First time only)
+   → Type: npm install
+   → Press: Enter
+
+3. Start the Server
+   → Type: npm start
+   → Press: Enter
+
+4. Open Browser
+   → Go to: http://localhost:5000
+
+✅ DONE! The voting system is running!
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🌐 IMPORTANT URLS:
+
+   Homepage:     http://localhost:5000
+   Register:     http://localhost:5000/register.html
+   Login:        http://localhost:5000/login.html
+   Vote:         http://localhost:5000/vote.html
+   Admin:        http://localhost:5000/admin_login.html
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🔑 ADMIN CREDENTIALS:
+
+   Username: mgm
+   Password: maroof
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🛑 TO STOP THE SERVER:
+
+   In VS Code Terminal:
+   → Press: Ctrl + C
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+⚠️  TROUBLESHOOTING:
+
+   Problem: Port 5000 already in use
+   Solution: 
+   → netstat -ano | findstr :5000
+   → taskkill /PID <number> /F
+   → npm start
+
+   Problem: MongoDB error
+   Solution:
+   → Open new terminal
+   → Type: mongod
+   → Press: Enter
+   → Go back and run: npm start
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✨ FEATURES:
+
+   ✅ User Registration with Photo Upload
+   ✅ OTP Verification (displayed on screen)
+   ✅ Secure Login
+   ✅ One Vote Per User
+   ✅ Real-time Results
+   ✅ Admin Dashboard
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📱 USER FLOW:
+
+   1. Register → Fill form + upload photo
+   2. Verify OTP → Enter 6-digit code
+   3. Login → Aadhar + Password
+   4. Vote → Select candidate
+   5. Done! → Vote recorded
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🎉 READY TO VOTE!
+
+For detailed instructions, see: HOW_TO_RUN.md

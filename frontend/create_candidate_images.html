@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Candidate Images - Working Version</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        h1 {
+            color: white;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .candidates-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+        .candidate-card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        .candidate-photo {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid #667eea;
+            margin: 0 auto 20px;
+            display: block;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+        }
+        .party-logo {
+            width: 60px;
+            height: 60px;
+            margin: 10px auto;
+        }
+        .symbol {
+            font-size: 50px;
+            margin: 10px 0;
+        }
+        h3 {
+            color: #667eea;
+            margin: 10px 0;
+        }
+        p {
+            color: #666;
+            font-size: 14px;
+        }
+        .btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 15px 30px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🗳️ Indian Political Leaders - Voting Candidates</h1>
+        
+        <div class="candidates-grid">
+            <!-- Narendra Modi - BJP -->
+            <div class="candidate-card">
+                <img class="candidate-photo" 
+                     src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Crect fill='%23FF9933' width='180' height='180'/%3E%3Ctext x='50%25' y='50%25' font-size='60' text-anchor='middle' dy='.3em' fill='white' font-family='Arial'%3ENM%3C/text%3E%3C/svg%3E"
+                     alt="Narendra Modi">
+                <div class="symbol">🪷</div>
+                <img class="party-logo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Bharatiya_Janata_Party_logo.svg/200px-Bharatiya_Janata_Party_logo.svg.png" alt="BJP">
+                <h3>Narendra Modi</h3>
+                <p>Bharatiya Janata Party (BJP)</p>
+                <p><strong>Prime Minister of India</strong></p>
+            </div>
+
+            <!-- Rahul Gandhi - Congress -->
+            <div class="candidate-card">
+                <img class="candidate-photo" 
+                     src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Crect fill='%2319AAED' width='180' height='180'/%3E%3Ctext x='50%25' y='50%25' font-size='60' text-anchor='middle' dy='.3em' fill='white' font-family='Arial'%3ERG%3C/text%3E%3C/svg%3E"
+                     alt="Rahul Gandhi">
+                <div class="symbol">✋</div>
+                <img class="party-logo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Indian_National_Congress_hand_logo.svg/200px-Indian_National_Congress_hand_logo.svg.png" alt="Congress">
+                <h3>Rahul Gandhi</h3>
+                <p>Indian National Congress</p>
+                <p><strong>Member of Parliament</strong></p>
+            </div>
+
+            <!-- Asaduddin Owaisi - AIMIM -->
+            <div class="candidate-card">
+                <img class="candidate-photo" 
+                     src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Crect fill='%23006400' width='180' height='180'/%3E%3Ctext x='50%25' y='50%25' font-size='60' text-anchor='middle' dy='.3em' fill='white' font-family='Arial'%3EAO%3C/text%3E%3C/svg%3E"
+                     alt="Asaduddin Owaisi">
+                <div class="symbol">🌙</div>
+                <img class="party-logo" src="https://upload.wikimedia.org/wikipedia/en/thumb/8/89/All_India_Majlis-e-Ittehadul_Muslimeen_flag.svg/200px-All_India_Majlis-e-Ittehadul_Muslimeen_flag.svg.png" alt="AIMIM">
+                <h3>Asaduddin Owaisi</h3>
+                <p>All India Majlis-e-Ittehadul Muslimeen</p>
+                <p><strong>Member of Parliament</strong></p>
+            </div>
+
+            <!-- Uddhav Thackeray - Shiv Sena -->
+            <div class="candidate-card">
+                <img class="candidate-photo" 
+                     src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Crect fill='%23FF6600' width='180' height='180'/%3E%3Ctext x='50%25' y='50%25' font-size='60' text-anchor='middle' dy='.3em' fill='white' font-family='Arial'%3EUT%3C/text%3E%3C/svg%3E"
+                     alt="Uddhav Thackeray">
+                <div class="symbol">🏹</div>
+                <img class="party-logo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Shiv_Sena_symbol.svg/200px-Shiv_Sena_symbol.svg.png" alt="Shiv Sena">
+                <h3>Uddhav Thackeray</h3>
+                <p>Shiv Sena</p>
+                <p><strong>Former Chief Minister</strong></p>
+            </div>
+
+            <!-- Arvind Kejriwal - Mashal Party -->
+            <div class="candidate-card">
+                <img class="candidate-photo" 
+                     src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Crect fill='%23FFD700' width='180' height='180'/%3E%3Ctext x='50%25' y='50%25' font-size='60' text-anchor='middle' dy='.3em' fill='%23FF8C00' font-family='Arial'%3EAK%3C/text%3E%3C/svg%3E"
+                     alt="Arvind Kejriwal">
+                <div class="symbol">🔥</div>
+                <img class="party-logo" src="https://img.icons8.com/color/200/fire-element.png" alt="Mashal">
+                <h3>Arvind Kejriwal</h3>
+                <p>Mashal Party</p>
+                <p><strong>Chief Minister of Delhi</strong></p>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 40px;">
+            <a href="vote.html" class="btn">Go to Voting Page →</a>
+        </div>
+    </div>
+</body>
+</html>

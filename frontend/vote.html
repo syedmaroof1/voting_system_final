@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Maharashtra Election 2029 - Vote</title>
+<style>
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #FF9933 0%, #FFFFFF 50%, #138808 100%);
+    background-attachment: fixed;
+    margin: 0;
+    padding: 20px;
+    min-height: 100vh;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.2) 0%, transparent 50%),
+        radial-gradient(circle at 80% 70%, rgba(255, 153, 51, 0.1) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 30px auto;
+    padding: 40px;
+    position: relative;
+    z-index: 1;
+}
+
+.header {
+    text-align: center;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    padding: 30px;
+    border-radius: 25px;
+    margin-bottom: 30px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+}
+
+.header h1 {
+    color: #FF9933;
+    font-size: 48px;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+}
+
+.header p {
+    color: #138808;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.location-selector {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    padding: 30px;
+    border-radius: 25px;
+    margin-bottom: 30px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+}
+
+.location-selector h3 {
+    color: #FF9933;
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
+.location-selector select {
+    width: 100%;
+    padding: 15px;
+    font-size: 16px;
+    border: 2px solid #FF9933;
+    border-radius: 15px;
+    margin-bottom: 15px;
+    background: white;
+    cursor: pointer;
+}
+
+.location-selector select:focus {
+    outline: none;
+    border-color: #138808;
+    box-shadow: 0 0 15px rgba(255, 153, 51, 0.3);
+}
+
+.alliance-section {
+    margin-bottom: 40px;
+}
+
+.alliance-header {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    padding: 20px;
+    border-radius: 20px;
+    margin-bottom: 20px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+}
+
+.alliance-header h2 {
+    color: #FF9933;
+    font-size: 32px;
+    margin: 0;
+}
+
+.candidate-cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+}
+
+.card {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    padding: 30px;
+    width: 300px;
+    border-radius: 25px;
+    text-align: center;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+    transition: all 0.4s ease;
+    border: 3px solid transparent;
+    animation: fadeInUp 0.6s ease;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.card:hover {
+    transform: translateY(-15px) scale(1.05);
+    box-shadow: 0 25px 60px rgba(255, 153, 51, 0.4);
+}
+
+.candidate-photo {
+    width: 180px !important;
+    height: 180px !important;
+    object-fit: cover !important;
+    border-radius: 50% !important;
+    border: 5px solid #FF9933 !important;
+    margin: 0 auto !important;
+    display: block !important;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.2) !important;
+    transition: all 0.3s ease !important;
+}
+
+.card:hover .candidate-photo {
+    transform: scale(1.08) !important;
+    box-shadow: 0 12px 35px rgba(255, 153, 51, 0.5) !important;
+}
+
+.party-logo {
+    width: 50px !important;
+    height: 50px !important;
+    object-fit: contain !important;
+    background: white !important;
+    border-radius: 50% !important;
+    padding: 5px !important;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.2) !important;
+}
+
+.card h3 {
+    color: #FF9933;
+    margin-bottom: 10px;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.card p {
+    color: #666;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.alliance-badge {
+    display: inline-block;
+    padding: 5px 15px;
+    background: linear-gradient(135deg, #FF9933, #138808);
+    color: white;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.card button {
+    padding: 14px 30px;
+    background: linear-gradient(135deg, #FF9933, #138808);
+    color: white;
+    font-size: 17px;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: bold;
+    box-shadow: 0 8px 25px rgba(255, 153, 51, 0.4);
+    width: 100%;
+}
+
+.card button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 35px rgba(255, 153, 51, 0.6);
+}
+
+#response {
+    text-align: center;
+    margin-top: 40px;
+    font-weight: bold;
+    font-size: 20px;
+    padding: 20px;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@media(max-width: 768px) {
+    .container {
+        padding: 20px;
+    }
+    
+    .header h1 {
+        font-size: 32px;
+    }
+    
+    .card {
+        width: 100%;
+        max-width: 350px;
+    }
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+  <div class="header">
+    <h1>🗳️ Maharashtra Vidhan Sabha Election 2029</h1>
+    <p>Cast Your Vote for Maharashtra Assembly</p>
+  </div>
+
+  <div class="location-selector">
+    <h3>📍 Select Your Location</h3>
+    <select id="districtSelect">
+      <option value="">Select District</option>
+    </select>
+    <select id="talukaSelect" disabled>
+      <option value="">First select district</option>
+    </select>
+  </div>
+
+  <div id="votingSection" style="display: none;">
+    <!-- Location Info -->
+    <div style="background: rgba(255, 255, 255, 0.95); padding: 20px; border-radius: 20px; margin-bottom: 30px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.15);">
+      <h3 style="color: #FF9933; margin-bottom: 10px;">📍 Your Selected Location</h3>
+      <p style="font-size: 18px; color: #333;"><strong>District:</strong> <span id="selectedDistrict"></span> | <strong>Taluka:</strong> <span id="selectedTaluka"></span></p>
+      <p style="font-size: 14px; color: #666; margin-top: 10px;">Showing candidates for your constituency</p>
+    </div>
+
+    <!-- Mahayuti Alliance -->
+    <div class="alliance-section">
+      <div class="alliance-header">
+        <h2>🔶 Mahayuti Alliance</h2>
+      </div>
+      <div class="candidate-cards" id="mahayutiCards"></div>
+    </div>
+
+    <!-- Maha Vikas Aghadi -->
+    <div class="alliance-section">
+      <div class="alliance-header">
+        <h2>🔷 Maha Vikas Aghadi (MVA)</h2>
+      </div>
+      <div class="candidate-cards" id="mvaCards"></div>
+    </div>
+
+    <!-- Independent Parties -->
+    <div class="alliance-section">
+      <div class="alliance-header">
+        <h2>⚪ Independent Parties</h2>
+      </div>
+      <div class="candidate-cards" id="independentCards"></div>
+    </div>
+  </div>
+
+  <div id="response"></div>
+</div>
+
+<script src="maharashtra_data.js"></script>
+<script src="district_candidates.js"></script>
+<script>
+const userAadhar = localStorage.getItem('currentUser');
+if(!userAadhar){
+    alert("Please login first!");
+    window.location.href = 'login.html';
+}
+
+// Populate districts
+const districtSelect = document.getElementById('districtSelect');
+const talukaSelect = document.getElementById('talukaSelect');
+const votingSection = document.getElementById('votingSection');
+
+maharashtraDistricts.forEach(district => {
+    const option = document.createElement('option');
+    option.value = district.name;
+    option.textContent = district.name;
+    districtSelect.appendChild(option);
+});
+
+// Handle district selection
+districtSelect.addEventListener('change', function() {
+    const selectedDistrict = maharashtraDistricts.find(d => d.name === this.value);
+    talukaSelect.innerHTML = '<option value="">Select Taluka</option>';
+    
+    if(selectedDistrict) {
+        talukaSelect.disabled = false;
+        selectedDistrict.talukas.forEach(taluka => {
+            const option = document.createElement('option');
+            option.value = taluka;
+            option.textContent = taluka;
+            talukaSelect.appendChild(option);
+        });
+    } else {
+        talukaSelect.disabled = true;
+        votingSection.style.display = 'none';
+    }
+});
+
+// Handle taluka selection
+talukaSelect.addEventListener('change', function() {
+    if(this.value) {
+        // Update selected location display
+        document.getElementById('selectedDistrict').textContent = districtSelect.value;
+        document.getElementById('selectedTaluka').textContent = this.value;
+        
+        votingSection.style.display = 'block';
+        loadCandidates();
+        
+        // Smooth scroll to voting section
+        setTimeout(() => {
+            votingSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 100);
+    } else {
+        votingSection.style.display = 'none';
+    }
+});
+
+async function loadCandidates() {
+    const mahayutiContainer = document.getElementById('mahayutiCards');
+    const mvaContainer = document.getElementById('mvaCards');
+    const independentContainer = document.getElementById('independentCards');
+    
+    mahayutiContainer.innerHTML = '<p style="color: #666; padding: 20px;">🔄 Loading candidates...</p>';
+    mvaContainer.innerHTML = '<p style="color: #666; padding: 20px;">🔄 Loading...</p>';
+    independentContainer.innerHTML = '<p style="color: #666; padding: 20px;">🔄 Loading...</p>';
+    
+    const district = districtSelect.value;
+    const taluka = talukaSelect.value;
+    
+    console.log('Loading candidates for:', district, taluka);
+    
+    try {
+        // Fetch candidates from database
+        const url = `http://localhost:5000/api/admin/candidates/district/${encodeURIComponent(district)}/taluka/${encodeURIComponent(taluka)}`;
+        console.log('Fetching from:', url);
+        
+        const response = await fetch(url);
+        const data = await response.json();
+        
+        console.log('Received data:', data);
+        
+        mahayutiContainer.innerHTML = '';
+        mvaContainer.innerHTML = '';
+        independentContainer.innerHTML = '';
+        
+        let candidatesToShow = [];
+        let mahayutiCount = 0, mvaCount = 0, independentCount = 0;
+        
+        if(data.candidates && data.candidates.length > 0) {
+            console.log(`Found ${data.candidates.length} candidates in database`);
+            
+            // Map database candidates to display format
+            candidatesToShow = data.candidates.map(cand => {
+                const partyInfo = getPartyInfo(cand.party);
+                const initials = cand.name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
+                const photo = `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Crect fill='${encodeURIComponent(partyInfo.color)}' width='180' height='180'/%3E%3Ctext x='50%25' y='50%25' font-size='70' font-weight='bold' text-anchor='middle' dy='.3em' fill='white' font-family='Arial'%3E${initials}%3C/text%3E%3C/svg%3E`;
+                
+                return {
+                    id: cand._id,
+                    name: cand.name,
+                    party: cand.party,
+                    alliance: cand.alliance,
+                    constituency: cand.constituency,
+                    position: cand.mlaStatus + (cand.position ? ' - ' + cand.position : ''),
+                    color: partyInfo.color,
+                    symbol: partyInfo.symbol,
+                    logo: partyInfo.logo,
+                    photo: photo
+                };
+            });
+            
+            // Store candidates globally for voting
+            loadedCandidates = candidatesToShow;
+            
+            // Display candidates
+            candidatesToShow.forEach(candidate => {
+                const card = createCandidateCard(candidate);
+                
+                if(candidate.alliance === "Mahayuti" || candidate.alliance === "Mahayuti Alliance") {
+                    mahayutiContainer.appendChild(card);
+                    mahayutiCount++;
+                } else if(candidate.alliance === "MVA" || candidate.alliance === "Maha Vikas Aghadi (MVA)") {
+                    mvaContainer.appendChild(card);
+                    mvaCount++;
+                } else {
+                    independentContainer.appendChild(card);
+                    independentCount++;
+                }
+            });
+            
+            // Show empty messages for alliances with no candidates
+            if(mahayutiCount === 0) {
+                mahayutiContainer.innerHTML = '<p style="color: #999; padding: 20px; text-align: center;">No Mahayuti candidates in this constituency</p>';
+            }
+            if(mvaCount === 0) {
+                mvaContainer.innerHTML = '<p style="color: #999; padding: 20px; text-align: center;">No MVA candidates in this constituency</p>';
+            }
+            if(independentCount === 0) {
+                independentContainer.innerHTML = '<p style="color: #999; padding: 20px; text-align: center;">No Independent candidates in this constituency</p>';
+            }
+            
+        } else {
+            // No candidates found - show message only, NO default parties
+            console.log('No candidates found in database');
+            
+            const noDataMessage = `
+                <div style="background: linear-gradient(135deg, rgba(255,153,51,0.1), rgba(19,136,8,0.1)); 
+                            padding: 40px; 
+                            border-radius: 20px; 
+                            text-align: center; 
+                            border: 2px solid rgba(255,153,51,0.3);
+                            margin: 20px;">
+                    <div style="font-size: 60px; margin-bottom: 20px;">📋</div>
+                    <h3 style="color: #FF9933; font-size: 24px; margin-bottom: 15px;">No Candidates Added Yet</h3>
+                    <p style="color: #666; font-size: 16px; line-height: 1.6; max-width: 600px; margin: 0 auto;">
+                        Candidates for <strong>${district} - ${taluka}</strong> have not been added yet.<br>
+                        Please contact the election administrator to add candidates for this constituency.
+                    </p>
+                    <div style="margin-top: 25px; padding: 15px; background: rgba(255,153,51,0.1); border-radius: 10px; display: inline-block;">
+                        <p style="color: #FF9933; font-weight: bold; margin: 0;">
+                            🔒 Voting will be enabled once candidates are registered
+                        </p>
+                    </div>
+                </div>
+            `;
+            
+            mahayutiContainer.innerHTML = noDataMessage;
+            mvaContainer.innerHTML = '';
+            independentContainer.innerHTML = '';
+        }
+        
+    } catch(error) {
+        console.error('Error loading candidates:', error);
+        
+        const errorMessage = `
+            <div style="background: rgba(255,102,0,0.1); 
+                        padding: 40px; 
+                        border-radius: 20px; 
+                        text-align: center; 
+                        border: 2px solid rgba(255,102,0,0.3);
+                        margin: 20px;">
+                <div style="font-size: 60px; margin-bottom: 20px;">⚠️</div>
+                <h3 style="color: #ff6600; font-size: 24px; margin-bottom: 15px;">Unable to Connect to Server</h3>
+                <p style="color: #666; font-size: 16px; line-height: 1.6;">
+                    There was an error connecting to the election server.<br>
+                    Please check your internet connection and try again.
+                </p>
+                <button onclick="loadCandidates()" style="margin-top: 20px; padding: 12px 30px; background: linear-gradient(135deg, #FF9933, #138808); color: white; border: none; border-radius: 25px; font-size: 16px; cursor: pointer; font-weight: bold;">
+                    🔄 Retry
+                </button>
+            </div>
+        `;
+        
+        mahayutiContainer.innerHTML = errorMessage;
+        mvaContainer.innerHTML = '';
+        independentContainer.innerHTML = '';
+    }
+}
+
+function getPartyInfo(party) {
+    const partyData = {
+        "BJP": { color: "#FF9933", symbol: "🪷", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Bharatiya_Janata_Party_logo.svg/200px-Bharatiya_Janata_Party_logo.svg.png" },
+        "Shiv Sena (Shinde)": { color: "#FF6600", symbol: "⚔️", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Shiv_Sena_symbol.svg/200px-Shiv_Sena_symbol.svg.png" },
+        "NCP (Ajit)": { color: "#00CED1", symbol: "⏰", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/c/cd/Nationalist_Congress_Party_logo.svg/200px-Nationalist_Congress_Party_logo.svg.png" },
+        "Congress": { color: "#19AAED", symbol: "✋", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Indian_National_Congress_hand_logo.svg/200px-Indian_National_Congress_hand_logo.svg.png" },
+        "Shiv Sena (UBT)": { color: "#FF8C00", symbol: "🔥", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Shiv_Sena_symbol.svg/200px-Shiv_Sena_symbol.svg.png" },
+        "NCP (Sharad)": { color: "#20B2AA", symbol: "🕰️", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/c/cd/Nationalist_Congress_Party_logo.svg/200px-Nationalist_Congress_Party_logo.svg.png" },
+        "MNS": { color: "#FF1493", symbol: "🚂", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/d/d4/Maharashtra_Navnirman_Sena_logo.svg/200px-Maharashtra_Navnirman_Sena_logo.svg.png" },
+        "AIMIM": { color: "#006400", symbol: "🌙", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/8/89/All_India_Majlis-e-Ittehadul_Muslimeen_flag.svg/200px-All_India_Majlis-e-Ittehadul_Muslimeen_flag.svg.png" },
+        "BSP": { color: "#0000FF", symbol: "🐘", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/4/41/BSP_Election_Symbol.svg/200px-BSP_Election_Symbol.svg.png" },
+        "SP": { color: "#FF0000", symbol: "🚲", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/Samajwadi_Party_election_symbol_-_bicycle.svg/200px-Samajwadi_Party_election_symbol_-_bicycle.svg.png" },
+        "Independent": { color: "#808080", symbol: "⭐", logo: "" }
+    };
+    
+    return partyData[party] || { color: "#808080", symbol: "⭐", logo: "" };
+}
+
+function createCandidateCard(candidate) {
+    const card = document.createElement('div');
+    card.classList.add('card');
+    card.style.borderColor = candidate.color;
+    
+    const position = candidate.position || candidate.title || "Candidate";
+    const constituency = candidate.constituency ? `<p style="font-size: 13px; color: #FF9933; margin-bottom: 5px; font-weight: bold;">📍 ${candidate.constituency}</p>` : '';
+    
+    card.innerHTML = `
+        <div style="position: relative; margin-bottom: 25px; padding-top: 10px;">
+            <img src="${candidate.photo}" 
+                 alt="${candidate.name}" 
+                 class="candidate-photo"
+                 style="border-color: ${candidate.color} !important;">
+            <div style="position: absolute; bottom: -15px; left: 50%; transform: translateX(-50%);">
+                <img src="${candidate.logo}" 
+                     alt="${candidate.party}" 
+                     class="party-logo"
+                     onerror="this.style.display='none'">
+            </div>
+        </div>
+        <div style="text-align: center; font-size: 45px; margin: 15px 0 10px 0;">${candidate.symbol}</div>
+        <h3 style="color: ${candidate.color};">${candidate.name}</h3>
+        ${constituency}
+        <div class="alliance-badge" style="background: ${candidate.color};">${candidate.alliance}</div>
+        <p style="font-size: 14px; color: #999; margin-bottom: 5px; font-style: italic;">${position}</p>
+        <p style="font-size: 15px; color: #888; margin-bottom: 20px; line-height: 1.4; font-weight: 500;">${candidate.party}</p>
+        <button onclick="vote('${candidate.id}')" style="background: linear-gradient(135deg, ${candidate.color}, #138808);">
+            Vote for ${candidate.name}
+        </button>
+    `;
+    
+    return card;
+}
+
+// Store loaded candidates globally
+let loadedCandidates = [];
+
+async function vote(candidateId){
+    const district = districtSelect.value;
+    const taluka = talukaSelect.value;
+    
+    if(!district || !taluka) {
+        alert("Please select your district and taluka first!");
+        return;
+    }
+    
+    // Find candidate from loaded candidates
+    const candidate = loadedCandidates.find(c => c.id === candidateId);
+    
+    if(!candidate) {
+        alert("Candidate not found. Please refresh and try again.");
+        return;
+    }
+    
+    if(!confirm(`Are you sure you want to vote for ${candidate.name} from ${candidate.party}?`)) return;
+
+    const responseDiv = document.getElementById('response');
+
+    try{
+        const res = await fetch('http://localhost:5000/api/vote/cast', {
+            method: 'POST',
+            headers: {'Content-Type':'application/json'},
+            body: JSON.stringify({ 
+                aadhar: userAadhar, 
+                candidateId,
+                district,
+                taluka
+            })
+        });
+
+        const result = await res.json();
+
+        if(res.status === 200){
+            responseDiv.style.color = 'green';
+            responseDiv.innerText = `✅ ${result.message}\nDistrict: ${district}, Taluka: ${taluka}`;
+            
+            // Scroll to response
+            responseDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        } else {
+            responseDiv.style.color = 'red';
+            responseDiv.innerText = result.message;
+            
+            // Scroll to response
+            responseDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+    }catch(err){
+        console.log(err);
+        responseDiv.style.color = 'red';
+        responseDiv.innerText = 'Server error, please try again later.';
+    }
+}
+</script>
+
+</body>
+</html>

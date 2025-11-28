@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Manage Candidates | Maharashtra Election 2029</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #FF9933 0%, #FFFFFF 50%, #138808 100%);
+            background-attachment: fixed;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 {
+            background: linear-gradient(135deg, #FF9933, #138808);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 32px;
+        }
+
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #FF9933, #138808);
+            color: white;
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a6f);
+            color: white;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .content {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 30px;
+        }
+
+        .form-section, .list-section {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .form-section h2, .list-section h2 {
+            color: #FF9933;
+            margin-bottom: 25px;
+            font-size: 24px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #FF9933;
+            box-shadow: 0 0 10px rgba(255, 153, 51, 0.2);
+        }
+
+        .candidate-card {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 15px;
+            border-left: 5px solid #FF9933;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .candidate-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+        }
+
+        .candidate-card h3 {
+            color: #FF9933;
+            margin-bottom: 10px;
+        }
+
+        .candidate-info {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .info-item {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .info-item strong {
+            color: #333;
+        }
+
+        .party-badge {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            color: white;
+            margin-right: 10px;
+        }
+
+        .filter-section {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .filter-section select {
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            flex: 1;
+            min-width: 200px;
+        }
+
+        @media(max-width: 1024px) {
+            .content {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🗳️ Manage Candidates - Maharashtra Election 2029</h1>
+            <div>
+                <button class="btn btn-danger" onclick="logout()">Logout</button>
+            </div>
+        </div>
+
+        <div class="content">
+            <!-- Add Candidate Form -->
+            <div class="form-section">
+                <h2>Add New Candidate</h2>
+                <form id="candidateForm">
+                    <div class="form-group">
+                        <label>Candidate Name *</label>
+                        <input type="text" id="candidateName" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>District *</label>
+                        <select id="district" required>
+                            <option value="">Select District</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Taluka *</label>
+                        <select id="taluka" required disabled>
+                            <option value="">First select district</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Constituency *</label>
+                        <input type="text" id="constituency" placeholder="e.g., Baramati, Worli" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Political Party *</label>
+                        <select id="party" required>
+                            <option value="">Select Party</option>
+                            <option value="BJP">Bharatiya Janata Party (BJP)</option>
+                            <option value="Shiv Sena (Shinde)">Shiv Sena (Shinde Faction)</option>
+                            <option value="NCP (Ajit)">NCP (Ajit Pawar)</option>
+                            <option value="Congress">Indian National Congress</option>
+                            <option value="Shiv Sena (UBT)">Shiv Sena (UBT)</option>
+                            <option value="NCP (Sharad)">NCP (Sharad Pawar)</option>
+                            <option value="MNS">Maharashtra Navnirman Sena</option>
+                            <option value="AIMIM">AIMIM</option>
+                            <option value="BSP">Bahujan Samaj Party</option>
+                            <option value="SP">Samajwadi Party</option>
+                            <option value="Independent">Independent</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Alliance</label>
+                        <select id="alliance" required>
+                            <option value="">Select Alliance</option>
+                            <option value="Mahayuti">Mahayuti Alliance</option>
+                            <option value="MVA">Maha Vikas Aghadi (MVA)</option>
+                            <option value="Independent">Independent</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Current MLA Status</label>
+                        <select id="mlaStatus">
+                            <option value="New Candidate">New Candidate</option>
+                            <option value="Sitting MLA">Sitting MLA</option>
+                            <option value="Former MLA">Former MLA</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Position/Designation</label>
+                        <input type="text" id="position" placeholder="e.g., Chief Minister, Cabinet Minister">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Additional Details</label>
+                        <textarea id="details" rows="3" placeholder="Any additional information"></textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">Add Candidate</button>
+                </form>
+            </div>
+
+            <!-- Candidates List -->
+            <div>
+                <div class="filter-section">
+                    <select id="filterDistrict" onchange="filterCandidates()">
+                        <option value="">All Districts</option>
+                    </select>
+                    <select id="filterParty" onchange="filterCandidates()">
+                        <option value="">All Parties</option>
+                        <option value="BJP">BJP</option>
+                        <option value="Congress">Congress</option>
+                        <option value="Shiv Sena (Shinde)">Shiv Sena (Shinde)</option>
+                        <option value="Shiv Sena (UBT)">Shiv Sena (UBT)</option>
+                        <option value="NCP (Ajit)">NCP (Ajit)</option>
+                        <option value="NCP (Sharad)">NCP (Sharad)</option>
+                    </select>
+                    <select id="filterAlliance" onchange="filterCandidates()">
+                        <option value="">All Alliances</option>
+                        <option value="Mahayuti">Mahayuti</option>
+                        <option value="MVA">MVA</option>
+                        <option value="Independent">Independent</option>
+                    </select>
+                </div>
+
+                <div class="list-section">
+                    <h2>Registered Candidates (<span id="candidateCount">0</span>)</h2>
+                    <div id="candidatesList"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="maharashtra_data.js"></script>
+    <script>
+        // Check admin authentication
+        const admin = localStorage.getItem('admin');
+        if(!admin) {
+            alert('Please login as admin!');
+            window.location.href = 'admin_login.html';
+        }
+
+        // Load districts
+        const districtSelect = document.getElementById('district');
+        const talukaSelect = document.getElementById('taluka');
+        const filterDistrictSelect = document.getElementById('filterDistrict');
+
+        maharashtraDistricts.forEach(district => {
+            const option = document.createElement('option');
+            option.value = district.name;
+            option.textContent = district.name;
+            districtSelect.appendChild(option);
+            
+            const filterOption = option.cloneNode(true);
+            filterDistrictSelect.appendChild(filterOption);
+        });
+
+        // Handle district selection
+        districtSelect.addEventListener('change', function() {
+            const selectedDistrict = maharashtraDistricts.find(d => d.name === this.value);
+            talukaSelect.innerHTML = '<option value="">Select Taluka</option>';
+            
+            if(selectedDistrict) {
+                talukaSelect.disabled = false;
+                selectedDistrict.talukas.forEach(taluka => {
+                    const option = document.createElement('option');
+                    option.value = taluka;
+                    option.textContent = taluka;
+                    talukaSelect.appendChild(option);
+                });
+            } else {
+                talukaSelect.disabled = true;
+            }
+        });
+
+        // Party colors and symbols
+        const partyInfo = {
+            "BJP": { color: "#FF9933", symbol: "🪷", alliance: "Mahayuti" },
+            "Shiv Sena (Shinde)": { color: "#FF6600", symbol: "⚔️", alliance: "Mahayuti" },
+            "NCP (Ajit)": { color: "#00CED1", symbol: "⏰", alliance: "Mahayuti" },
+            "Congress": { color: "#19AAED", symbol: "✋", alliance: "MVA" },
+            "Shiv Sena (UBT)": { color: "#FF8C00", symbol: "🔥", alliance: "MVA" },
+            "NCP (Sharad)": { color: "#20B2AA", symbol: "🕰️", alliance: "MVA" },
+            "MNS": { color: "#FF1493", symbol: "🚂", alliance: "Independent" },
+            "AIMIM": { color: "#006400", symbol: "🌙", alliance: "Independent" },
+            "BSP": { color: "#0000FF", symbol: "🐘", alliance: "Independent" },
+            "SP": { color: "#FF0000", symbol: "🚲", alliance: "Independent" },
+            "Independent": { color: "#808080", symbol: "⭐", alliance: "Independent" }
+        };
+
+        // Auto-fill alliance based on party
+        document.getElementById('party').addEventListener('change', function() {
+            const party = this.value;
+            if(partyInfo[party]) {
+                document.getElementById('alliance').value = partyInfo[party].alliance;
+            }
+        });
+
+        // Form submission
+        document.getElementById('candidateForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const candidate = {
+                name: document.getElementById('candidateName').value,
+                district: document.getElementById('district').value,
+                taluka: document.getElementById('taluka').value,
+                constituency: document.getElementById('constituency').value,
+                party: document.getElementById('party').value,
+                alliance: document.getElementById('alliance').value,
+                mlaStatus: document.getElementById('mlaStatus').value,
+                position: document.getElementById('position').value,
+                details: document.getElementById('details').value,
+                addedDate: new Date().toISOString()
+            };
+
+            try {
+                const response = await fetch('http://localhost:5000/api/admin/add-candidate', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(candidate)
+                });
+
+                const result = await response.json();
+                
+                if(response.ok) {
+                    alert('✅ Candidate added successfully!');
+                    this.reset();
+                    talukaSelect.disabled = true;
+                    loadCandidates();
+                } else {
+                    alert('❌ Error: ' + result.message);
+                }
+            } catch(error) {
+                console.error('Error:', error);
+                alert('❌ Server error. Please try again.');
+            }
+        });
+
+        // Load and display candidates
+        async function loadCandidates() {
+            try {
+                const response = await fetch('http://localhost:5000/api/admin/candidates');
+                const data = await response.json();
+                
+                displayCandidates(data.candidates || []);
+            } catch(error) {
+                console.error('Error loading candidates:', error);
+            }
+        }
+
+        function displayCandidates(candidates) {
+            const container = document.getElementById('candidatesList');
+            document.getElementById('candidateCount').textContent = candidates.length;
+            
+            if(candidates.length === 0) {
+                container.innerHTML = '<p style="text-align: center; color: #999;">No candidates added yet.</p>';
+                return;
+            }
+
+            container.innerHTML = candidates.map(candidate => {
+                const info = partyInfo[candidate.party] || { color: "#808080", symbol: "⭐" };
+                return `
+                    <div class="candidate-card" style="border-left-color: ${info.color};">
+                        <h3>${info.symbol} ${candidate.name}</h3>
+                        <div class="candidate-info">
+                            <div class="info-item"><strong>District:</strong> ${candidate.district}</div>
+                            <div class="info-item"><strong>Taluka:</strong> ${candidate.taluka}</div>
+                            <div class="info-item"><strong>Constituency:</strong> ${candidate.constituency}</div>
+                            <div class="info-item"><strong>Status:</strong> ${candidate.mlaStatus}</div>
+                        </div>
+                        <div>
+                            <span class="party-badge" style="background: ${info.color};">${candidate.party}</span>
+                            <span class="party-badge" style="background: linear-gradient(135deg, #FF9933, #138808);">${candidate.alliance}</span>
+                        </div>
+                        ${candidate.position ? `<p style="margin-top: 10px; color: #666;"><strong>Position:</strong> ${candidate.position}</p>` : ''}
+                        ${candidate.details ? `<p style="margin-top: 10px; color: #666;">${candidate.details}</p>` : ''}
+                        <button class="btn btn-danger" style="margin-top: 15px; padding: 8px 20px;" onclick="deleteCandidate('${candidate._id}')">Delete</button>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function filterCandidates() {
+            const district = document.getElementById('filterDistrict').value;
+            const party = document.getElementById('filterParty').value;
+            const alliance = document.getElementById('filterAlliance').value;
+            
+            // Implement filtering logic
+            loadCandidates();
+        }
+
+        async function deleteCandidate(id) {
+            if(!confirm('Are you sure you want to delete this candidate?')) return;
+            
+            try {
+                const response = await fetch(`http://localhost:5000/api/admin/delete-candidate/${id}`, {
+                    method: 'DELETE'
+                });
+                
+                if(response.ok) {
+                    alert('✅ Candidate deleted successfully!');
+                    loadCandidates();
+                } else {
+                    alert('❌ Error deleting candidate');
+                }
+            } catch(error) {
+                console.error('Error:', error);
+                alert('❌ Server error');
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem('admin');
+            window.location.href = 'admin_login.html';
+        }
+
+        // Load candidates on page load
+        loadCandidates();
+    </script>
+</body>
+</html>

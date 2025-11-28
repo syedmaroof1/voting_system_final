@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Profile - Online Voting System</title>
+<style>
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background-attachment: fixed;
+    margin: 0;
+    padding: 20px;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        radial-gradient(circle at 30% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 70% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+.container {
+    max-width: 650px;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    padding: 50px;
+    border-radius: 30px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    text-align: center;
+    position: relative;
+    z-index: 1;
+    animation: slideIn 0.5s ease;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+h2 {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 30px;
+    font-size: 36px;
+    font-weight: bold;
+}
+
+p {
+    font-size: 18px;
+    margin: 15px 0;
+    color: #555;
+    padding: 12px;
+    background: rgba(102, 126, 234, 0.05);
+    border-radius: 12px;
+    border-left: 4px solid #667eea;
+}
+
+p strong {
+    color: #667eea;
+}
+
+button {
+    padding: 16px 35px;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    font-size: 18px;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin: 15px 10px;
+    font-weight: bold;
+    box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+}
+
+button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 40px rgba(102, 126, 234, 0.6);
+}
+
+#logoutBtn {
+    background: linear-gradient(135deg, #f093fb, #f5576c);
+    box-shadow: 0 10px 30px rgba(245, 87, 108, 0.4);
+}
+
+#logoutBtn:hover {
+    box-shadow: 0 15px 40px rgba(245, 87, 108, 0.6);
+}
+
+@media(max-width: 600px) {
+    .container {
+        padding: 35px 25px;
+    }
+    
+    h2 {
+        font-size: 28px;
+    }
+    
+    button {
+        width: 100%;
+        margin: 10px 0;
+    }
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h2>Welcome, <span id="userName"></span></h2>
+  <p><strong>Aadhar:</strong> <span id="userAadhar"></span></p>
+  <p><strong>Email:</strong> <span id="userEmail"></span></p>
+  <p><strong>Address:</strong> <span id="userAddress"></span></p>
+  <button id="voteBtn">Vote Now</button>
+  <button id="logoutBtn" style="background:#ff6600; margin-left:10px;">Logout</button>
+</div>
+
+<script>
+const userAadhar = localStorage.getItem('currentUser');
+if(!userAadhar){
+    alert("No user logged in. Redirecting to login page.");
+    window.location.href = 'login.html';
+}
+
+// For now, we will display info from localStorage or dummy data
+// Later, fetch full user data from backend
+const dummyUserData = {
+    fullname: "John Doe",
+    email: "johndoe@example.com",
+    address: "123, Main Street",
+    aadhar: userAadhar
+};
+
+document.getElementById('userName').innerText = dummyUserData.fullname;
+document.getElementById('userEmail').innerText = dummyUserData.email;
+document.getElementById('userAddress').innerText = dummyUserData.address;
+document.getElementById('userAadhar').innerText = dummyUserData.aadhar;
+
+document.getElementById('voteBtn').addEventListener('click', ()=>{
+    window.location.href = 'vote.html';
+});
+
+document.getElementById('logoutBtn').addEventListener('click', ()=>{
+    localStorage.removeItem('currentUser');
+    window.location.href = 'login.html';
+});
+
+// Try to fetch real user data from backend
+async function fetchUserData() {
+    try {
+        const response = await fetch(`http://localhost:5000/api/admin/users`);
+        const data = await response.json();
+        
+        if(data.users) {
+            const user = data.users.find(u => u.aadhar === userAadhar);
+            if(user) {
+                document.getElementById('userName').innerText = user.username || 'User';
+                document.getElementById('userEmail').innerText = user.email || 'N/A';
+                document.getElementById('userAddress').innerText = user.address || 'N/A';
+                document.getElementById('userAadhar').innerText = user.aadhar;
+                return;
+            }
+        }
+    } catch(err) {
+        console.log('Could not fetch user data:', err);
+    }
+    
+    // Fallback to dummy data
+    document.getElementById('userName').innerText = dummyUserData.fullname;
+    document.getElementById('userEmail').innerText = dummyUserData.email;
+    document.getElementById('userAddress').innerText = dummyUserData.address;
+    document.getElementById('userAadhar').innerText = dummyUserData.aadhar;
+}
+
+fetchUserData();
+</script>
+
+</body>
+</html>

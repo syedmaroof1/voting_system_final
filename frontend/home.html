@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Online Voting System</title>
+  <style>
+    /* --- General Styles --- */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Arial', sans-serif;
+    }
+
+    body {
+      scroll-behavior: smooth;
+      background: linear-gradient(135deg, #ffe6cc, #fff5e6);
+      color: #333;
+    }
+
+    a {
+      text-decoration: none;
+    }
+
+    /* --- Navbar --- */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(0, 64, 128, 0.9);
+      padding: 15px 50px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 2px solid #ff6600;
+      border-radius: 0 0 10px 10px;
+    }
+
+    nav .logo {
+      font-size: 28px;
+      font-weight: bold;
+      color: #fff;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 25px;
+    }
+
+    nav ul li a {
+      color: #fff;
+      font-weight: bold;
+      padding: 5px 10px;
+      border-radius: 5px;
+      transition: 0.3s;
+    }
+
+    nav ul li a:hover {
+      background: #ff6600;
+      color: #fff;
+    }
+
+    /* --- Hero Section --- */
+    .hero {
+      background: linear-gradient(to bottom right, #ff9966, #ffcc99);
+      height: 90vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      color: #fff;
+      padding: 0 20px;
+      border-radius: 20px;
+      margin: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    }
+
+    .hero h1 {
+      font-size: 50px;
+      margin-bottom: 20px;
+      text-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+    }
+
+    .hero p {
+      font-size: 22px;
+      margin-bottom: 30px;
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+    }
+
+    .hero .btn {
+      background: #004080;
+      color: white;
+      padding: 15px 30px;
+      font-size: 18px;
+      border-radius: 5px;
+      transition: 0.3s;
+      box-shadow: 2px 2px 8px rgba(0,0,0,0.3);
+    }
+
+    .hero .btn:hover {
+      background: #003366;
+    }
+
+    /* --- Sections --- */
+    section {
+      padding: 80px 50px;
+      text-align: center;
+      background: rgba(255, 255, 255, 0.9);
+      margin: 20px;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    }
+
+    section h2 {
+      font-size: 36px;
+      color: #004080;
+      margin-bottom: 30px;
+    }
+
+    section p {
+      font-size: 18px;
+      color: #333;
+      max-width: 900px;
+      margin: 0 auto 30px auto;
+      line-height: 1.6;
+    }
+
+    /* --- Feature Cards --- */
+    .features {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 30px;
+      margin-top: 30px;
+    }
+
+    .feature-card {
+      background: #ffe0b3;
+      padding: 25px;
+      border-radius: 15px;
+      width: 280px;
+      box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
+      transition: 0.3s;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+    }
+
+    .feature-card h3 {
+      margin-bottom: 15px;
+      color: #004080;
+    }
+
+    /* --- Candidates --- */
+    .candidate-cards {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 25px;
+      margin-top: 30px;
+    }
+
+    .card {
+      border-radius: 15px;
+      padding: 20px;
+      width: 250px;
+      text-align: center;
+      transition: 0.3s;
+      background: linear-gradient(145deg, #ffe0b3, #fff0cc);
+      box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    }
+
+    .card img {
+      width: 100%;
+      border-radius: 50%;
+      margin-bottom: 15px;
+    }
+
+    /* --- Contact Form --- */
+    form {
+      max-width: 600px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    form input, form textarea {
+      padding: 12px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      resize: none;
+      background: #fff8f0;
+    }
+
+    form button {
+      padding: 15px;
+      font-size: 18px;
+      background: #004080;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: 0.3s;
+      box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
+    }
+
+    form button:hover {
+      background: #003366;
+    }
+
+    /* --- Footer --- */
+    footer {
+      background: #004080;
+      color: white;
+      text-align: center;
+      padding: 20px;
+      margin-top: 50px;
+      border-top-left-radius: 20px;
+      border-top-right-radius: 20px;
+    }
+
+    /* --- Responsive --- */
+    @media(max-width: 768px) {
+      nav ul {
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      .hero h1 {
+        font-size: 35px;
+      }
+
+      .hero p {
+        font-size: 18px;
+      }
+
+      .candidate-cards, .features {
+        flex-direction: column;
+        gap: 30px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav>
+    <div class="logo">VotingSystem</div>
+    <ul>
+      <li><a href="#home">Home</a></li>
+      <li><a href="#about">About Election</a></li>
+      <li><a href="#features">Features</a></li>
+      <li><a href="#candidates">Candidates</a></li>
+      <li><a href="#howto">How to Vote</a></li>
+      <li><a href="#contact">Contact Us</a></li>
+      <li><a href="login.html">Login</a></li>
+      <li><a href="register.html">Register</a></li>
+    </ul>
+  </nav>
+
+  <!-- Hero Section -->
+  <section id="home" class="hero">
+    <h1>Welcome to Online Voting System</h1>
+    <p>Secure, Transparent, and Easy Voting Platform for Everyone</p>
+    <a href="register.html" class="btn">Get Started</a>
+  </section>
+
+  <!-- About Election -->
+  <section id="about">
+    <h2>About Election</h2>
+    <p>
+      Our online voting system allows citizens to participate in elections securely from anywhere.
+      Each user can cast only one vote, and results are updated in real-time.
+      We ensure transparency, integrity, and convenience for all voters.
+    </p>
+  </section>
+
+  <!-- Features Section -->
+  <section id="features">
+    <h2>Platform Features</h2>
+    <div class="features">
+      <div class="feature-card">
+        <h3>Secure Voting</h3>
+        <p>All votes are encrypted and protected to ensure complete security and privacy.</p>
+      </div>
+      <div class="feature-card">
+        <h3>One Vote Per User</h3>
+        <p>Each registered user can cast only one vote to maintain fair and transparent elections.</p>
+      </div>
+      <div class="feature-card">
+        <h3>Real-Time Results</h3>
+        <p>Vote counts are updated instantly, providing accurate and trustworthy results.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Candidates Section -->
+  <section id="candidates">
+    <h2>Candidates</h2>
+    <div class="candidate-cards">
+      <div class="card">
+    
+        <h3>123</h3>
+        <p>Party: ABC</p>
+      </div>
+      <div class="card">
+        <h3>456</h3>
+        <p>Party: XYZ</p>
+      </div>
+      <div class="card">
+    
+        <h3>789</h3>
+        <p>Party: PQR</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- How to Vote Section -->
+  <section id="howto">
+    <h2>How to Vote</h2>
+    <p>
+      Voting on our platform is simple and easy:
+      <br>1. Register or Login to your account.
+      <br>2. Go to the Voting Page.
+      <br>3. Select your preferred candidate.
+      <br>4. Submit your vote securely.
+      <br>5. View results in real-time.
+    </p>
+  </section>
+
+  <!-- Contact Us Section -->
+  <section id="contact">
+    <h2>Contact Us</h2>
+    <p>If you have any questions or issues, feel free to contact us using the form below:</p>
+    <form id="contactForm">
+      <input type="text" placeholder="Your Name" required>
+      <input type="email" placeholder="Your Email" required>
+      <textarea placeholder="Your Message" rows="5" required></textarea>
+      <button type="submit">Send Message</button>
+    </form>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 Online Voting System. All Rights Reserved.</p>
+  </footer>
+</body>
+</html>

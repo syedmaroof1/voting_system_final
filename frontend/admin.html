@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Panel - Online Voting System</title>
+<style>
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background-attachment: fixed;
+    margin: 0;
+    padding: 20px;
+    min-height: 100vh;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 70%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 30px auto;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    padding: 40px;
+    border-radius: 30px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    position: relative;
+    z-index: 1;
+    animation: slideIn 0.5s ease;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+h2 {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+     -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-align: center;
+    margin-bottom: 35px;
+    font-size: 42px;
+    font-weight: bold;
+}
+
+h3 {
+    color: #667eea;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    font-size: 26px;
+}
+
+button {
+    padding: 14px 28px;
+    background: linear-gradient(135deg, #f093fb, #f5576c);
+    color: white;
+    font-size: 16px;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    margin-bottom: 20px;
+    font-weight: bold;
+    box-shadow: 0 8px 25px rgba(245, 87, 108, 0.4);
+    transition: all 0.3s ease;
+}
+
+button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 35px rgba(245, 87, 108, 0.6);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 25px;
+    background: white;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+}
+
+th, td {
+    padding: 16px;
+    text-align: center;
+    border-bottom: 1px solid rgba(102, 126, 234, 0.1);
+}
+
+th {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+tr:hover {
+    background: rgba(102, 126, 234, 0.05);
+}
+
+td {
+    color: #555;
+    font-size: 15px;
+}
+
+tr:last-child td {
+    border-bottom: none;
+}
+
+@media(max-width: 768px) {
+    .container {
+        padding: 25px 15px;
+    }
+    
+    h2 {
+        font-size: 32px;
+    }
+    
+    table {
+        font-size: 13px;
+    }
+    
+    th, td {
+        padding: 10px 5px;
+    }
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h2>Admin Panel</h2>
+  <div style="margin-bottom: 20px;">
+    <a href="admin_candidates.html" style="display: inline-block; padding: 12px 25px; background: linear-gradient(135deg, #FF9933, #138808); color: white; text-decoration: none; border-radius: 25px; margin-right: 10px; font-weight: bold;">📋 Manage Candidates</a>
+    <button id="logoutBtn" style="background:#ff6600;">Logout</button>
+  </div>
+  
+  <h3>Registered Users</h3>
+  <table id="usersTable">
+    <thead>
+      <tr>
+        <th>Aadhar</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Address</th>
+        <th>Voted</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <h3>Votes Summary</h3>
+  <table id="votesTable">
+    <thead>
+      <tr>
+        <th>Candidate ID</th>
+        <th>Candidate Name</th>
+        <th>Party</th>
+        <th>Total Votes</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+</div>
+
+<script>
+const admin = localStorage.getItem('admin');
+if(!admin){
+    alert("Please login as admin!");
+    window.location.href = 'admin_login.html';
+}
+
+document.getElementById('logoutBtn').addEventListener('click', ()=>{
+    localStorage.removeItem('admin');
+    window.location.href = 'admin_login.html';
+});
+
+// Political parties with candidates mapping for display
+const candidateMap = {
+    "bjp": {name: "Narendra Modi", party: "Bharatiya Janata Party (BJP)"},
+    "congress": {name: "Rahul Gandhi", party: "Indian National Congress"},
+    "aimim": {name: "Asaduddin Owaisi", party: "AIMIM"},
+    "shivsena": {name: "Uddhav Thackeray", party: "Shiv Sena"},
+    "mashal": {name: "Arvind Kejriwal", party: "Mashal Party"}
+};
+
+// Fetch and display real data
+async function loadData() {
+    try {
+        // Fetch users
+        const usersRes = await fetch('http://localhost:5000/api/admin/users');
+        const usersData = await usersRes.json();
+        
+        // Fetch vote results
+        const votesRes = await fetch('http://localhost:5000/api/admin/results');
+        const votesData = await votesRes.json();
+        
+        // Populate users table
+        const usersTbody = document.querySelector('#usersTable tbody');
+        usersTbody.innerHTML = '';
+        
+        if(usersData.users && usersData.users.length > 0) {
+            usersData.users.forEach(u => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${u.aadhar}</td>
+                    <td>${u.username}</td>
+                    <td>${u.email}</td>
+                    <td>${u.address}</td>
+                    <td>${u.hasVoted ? "Yes" : "No"}</td>
+                `;
+                usersTbody.appendChild(row);
+            });
+        } else {
+            usersTbody.innerHTML = '<tr><td colspan="5">No users registered yet</td></tr>';
+        }
+        
+        // Populate votes table
+        const votesTbody = document.querySelector('#votesTable tbody');
+        votesTbody.innerHTML = '';
+        
+        if(votesData.results && Object.keys(votesData.results).length > 0) {
+            Object.entries(votesData.results).forEach(([candidateId, votes]) => {
+                const candidate = candidateMap[candidateId] || {name: candidateId, party: "Unknown"};
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${candidateId}</td>
+                    <td>${candidate.name}</td>
+                    <td>${candidate.party}</td>
+                    <td>${votes}</td>
+                `;
+                votesTbody.appendChild(row);
+            });
+        } else {
+            votesTbody.innerHTML = '<tr><td colspan="4">No votes cast yet</td></tr>';
+        }
+        
+    } catch(err) {
+        console.error('Error loading data:', err);
+        document.querySelector('#usersTable tbody').innerHTML = '<tr><td colspan="5">Error loading users</td></tr>';
+        document.querySelector('#votesTable tbody').innerHTML = '<tr><td colspan="4">Error loading votes</td></tr>';
+    }
+}
+
+// Load data when page loads
+loadData();
+</script>
+
+</body>
+</html>
