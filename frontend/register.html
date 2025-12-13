@@ -1,219 +1,235 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Register - Online Voting System</title>
-<style>
-body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    background-attachment: fixed;
-    margin: 0;
-    padding: 20px;
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Online Voting System</title>
+    <script src="config.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-attachment: fixed;
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
 
-/* Animated Background */
-body::before {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: 
-        radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
-        radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
-    pointer-events: none;
-    z-index: 0;
-}
+        /* Animated Background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:
+                radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
 
-.container {
-    max-width: 550px;
-    width: 100%;
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(20px);
-    padding: 50px;
-    border-radius: 30px;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    position: relative;
-    z-index: 1;
-    animation: slideIn 0.5s ease;
-}
+        .container {
+            max-width: 550px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 50px;
+            border-radius: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            position: relative;
+            z-index: 1;
+            animation: slideIn 0.5s ease;
+        }
 
-@keyframes slideIn {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
 
-h2 {
-    text-align: center;
-    background: linear-gradient(135deg, #667eea, #764ba2);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    margin-bottom: 35px;
-    font-size: 36px;
-    font-weight: bold;
-}
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
 
-form {
-    display: flex;
-    flex-direction: column;
-    gap: 18px;
-}
+        h2 {
+            text-align: center;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 35px;
+            font-size: 36px;
+            font-weight: bold;
+        }
 
-input[type="text"], input[type="email"], input[type="password"], input[type="file"], textarea {
-    padding: 15px 20px;
-    border-radius: 15px;
-    border: 2px solid rgba(102, 126, 234, 0.3);
-    font-size: 16px;
-    width: 100%;
-    box-sizing: border-box;
-    background: rgba(255, 255, 255, 0.9);
-    transition: all 0.3s ease;
-    font-family: inherit;
-}
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
 
-input:focus, textarea:focus {
-    outline: none;
-    border-color: #667eea;
-    box-shadow: 0 0 20px rgba(102, 126, 234, 0.3);
-    transform: translateY(-2px);
-}
+        input[type="text"],
+        input[type="email"],
+        input[type="password"],
+        input[type="file"],
+        textarea {
+            padding: 15px 20px;
+            border-radius: 15px;
+            border: 2px solid rgba(102, 126, 234, 0.3);
+            font-size: 16px;
+            width: 100%;
+            box-sizing: border-box;
+            background: rgba(255, 255, 255, 0.9);
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
 
-textarea {
-    resize: none;
-}
+        input:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 20px rgba(102, 126, 234, 0.3);
+            transform: translateY(-2px);
+        }
 
-input[type="file"] {
-    padding: 12px;
-    cursor: pointer;
-}
+        textarea {
+            resize: none;
+        }
 
-button {
-    padding: 18px;
-    background: linear-gradient(135deg, #667eea, #764ba2);
-    color: white;
-    font-size: 18px;
-    border: none;
-    border-radius: 50px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    font-weight: bold;
-    box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
-}
+        input[type="file"] {
+            padding: 12px;
+            cursor: pointer;
+        }
 
-button:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 15px 40px rgba(102, 126, 234, 0.6);
-}
+        button {
+            padding: 18px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            font-size: 18px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
 
-button:active {
-    transform: translateY(-1px);
-}
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.6);
+        }
 
-.login-link {
-    text-align: center;
-    margin-top: 20px;
-    font-size: 15px;
-    color: #666;
-}
+        button:active {
+            transform: translateY(-1px);
+        }
 
-.login-link a {
-    color: #667eea;
-    text-decoration: none;
-    font-weight: bold;
-    transition: all 0.3s ease;
-}
+        .login-link {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 15px;
+            color: #666;
+        }
 
-.login-link a:hover {
-    color: #764ba2;
-    text-decoration: underline;
-}
+        .login-link a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
 
-#response {
-    text-align: center;
-    margin-top: 20px;
-    font-weight: bold;
-    padding: 15px;
-    border-radius: 15px;
-    animation: fadeIn 0.5s ease;
-}
+        .login-link a:hover {
+            color: #764ba2;
+            text-decoration: underline;
+        }
 
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
+        #response {
+            text-align: center;
+            margin-top: 20px;
+            font-weight: bold;
+            padding: 15px;
+            border-radius: 15px;
+            animation: fadeIn 0.5s ease;
+        }
 
-/* Responsive */
-@media(max-width: 600px) {
-    .container {
-        padding: 30px 20px;
-    }
-    
-    h2 {
-        font-size: 28px;
-    }
-}
-</style>
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Responsive */
+        @media(max-width: 600px) {
+            .container {
+                padding: 30px 20px;
+            }
+
+            h2 {
+                font-size: 28px;
+            }
+        }
+    </style>
 </head>
+
 <body>
 
-<div class="container">
-  <h2>Register for Online Voting</h2>
-  <form id="registerForm">
-    <input type="text" name="fullname" placeholder="Full Name" required>
-    <input type="email" name="email" placeholder="Email Address" required>
-    <input type="text" name="phone" placeholder="Phone Number (10 digits)" required pattern="\d{10}" title="Enter 10-digit phone number">
-    <input type="text" name="aadhar" placeholder="Aadhar Number" required pattern="\d{12}" title="Enter 12-digit Aadhar number">
-    <textarea name="address" placeholder="Address" rows="3" required></textarea>
-    <input type="file" name="profile_photo" accept="image/*">
-    <input type="password" name="password" placeholder="Password" required minlength="6">
-    <button type="submit">Register</button>
-  </form>
-  <div class="login-link">
-      Already have an account? <a href="login.html">Login Here</a>
-  </div>
-  <div id="response"></div>
-</div>
+    <div class="container">
+        <h2>Register for Online Voting</h2>
+        <form id="registerForm">
+            <input type="text" name="fullname" placeholder="Full Name" required>
+            <input type="email" name="email" placeholder="Email Address" required>
+            <input type="text" name="phone" placeholder="Phone Number (10 digits)" required pattern="\d{10}"
+                title="Enter 10-digit phone number">
+            <input type="text" name="aadhar" placeholder="Aadhar Number" required pattern="\d{12}"
+                title="Enter 12-digit Aadhar number">
+            <textarea name="address" placeholder="Address" rows="3" required></textarea>
+            <input type="file" name="profile_photo" accept="image/*">
+            <input type="password" name="password" placeholder="Password" required minlength="6">
+            <button type="submit">Register</button>
+        </form>
+        <div class="login-link">
+            Already have an account? <a href="login.html">Login Here</a>
+        </div>
+        <div id="response"></div>
+    </div>
 
-<script>
-const form = document.getElementById('registerForm');
-form.addEventListener('submit', async (e)=>{
-    e.preventDefault();
+    <script>
+        const form = document.getElementById('registerForm');
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
 
-    const formData = new FormData(form);
-    const aadhar = formData.get('aadhar');
-    const phone = formData.get('phone');
+            const formData = new FormData(form);
+            const aadhar = formData.get('aadhar');
+            const phone = formData.get('phone');
 
-    const respDiv = document.getElementById('response');
-    
-    // Show loading state
-    respDiv.style.color = '#004080';
-    respDiv.innerText = 'Registering... Please wait.';
+            const respDiv = document.getElementById('response');
 
-    try{
-        const res = await fetch('http://localhost:5000/api/auth/register',{
-            method: 'POST',
-            body: formData
-        });
+            // Show loading state
+            respDiv.style.color = '#004080';
+            respDiv.innerText = 'Registering... Please wait.';
 
-        const result = await res.json();
+            try {
+                const res = await fetch(API_CONFIG.getEndpoint('/api/auth/register'), {
+                    method: 'POST',
+                    body: formData
+                });
 
-        if(res.status === 200 || res.status === 201){
-            respDiv.style.color = 'green';
-            respDiv.innerHTML = `
+                const result = await res.json();
+
+                if (res.status === 200 || res.status === 201) {
+                    respDiv.style.color = 'green';
+                    respDiv.innerHTML = `
                 <div style="text-align: center;">
                     <h3 style="color: green; margin-bottom: 20px; font-size: 28px;">✅ Registration Successful!</h3>
                     <div style="background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1)); padding: 30px; border-radius: 20px; margin: 20px 0; border: 2px solid #667eea;">
@@ -233,36 +249,37 @@ form.addEventListener('submit', async (e)=>{
                     </button>
                 </div>
             `;
-            
-            // Disable form
-            form.style.opacity = '0.6';
-            form.querySelectorAll('input, button').forEach(el => el.disabled = true);
-            
-            // Store user info
-            localStorage.setItem('currentUser', aadhar);
-            
-            // Countdown timer - 3 seconds
-            let seconds = 3;
-            const countdownEl = document.getElementById('countdown');
-            const countdownInterval = setInterval(() => {
-                seconds--;
-                if(countdownEl) countdownEl.innerText = seconds;
-                if(seconds <= 0) {
-                    clearInterval(countdownInterval);
-                    window.location.href = 'login.html';
+
+                    // Disable form
+                    form.style.opacity = '0.6';
+                    form.querySelectorAll('input, button').forEach(el => el.disabled = true);
+
+                    // Store user info
+                    localStorage.setItem('currentUser', aadhar);
+
+                    // Countdown timer - 3 seconds
+                    let seconds = 3;
+                    const countdownEl = document.getElementById('countdown');
+                    const countdownInterval = setInterval(() => {
+                        seconds--;
+                        if (countdownEl) countdownEl.innerText = seconds;
+                        if (seconds <= 0) {
+                            clearInterval(countdownInterval);
+                            window.location.href = 'login.html';
+                        }
+                    }, 1000);
+                } else {
+                    respDiv.style.color = 'red';
+                    respDiv.innerHTML = `<strong>❌ Registration Failed:</strong><br>${result.message}`;
                 }
-            }, 1000);
-        } else {
-            respDiv.style.color = 'red';
-            respDiv.innerHTML = `<strong>❌ Registration Failed:</strong><br>${result.message}`;
-        }
-    }catch(err){
-        console.log('Registration error:', err);
-        respDiv.style.color = 'red';
-        respDiv.innerHTML = `<strong>❌ Error:</strong><br>Server error: ${err.message || 'Please try again.'}`;
-    }
-});
-</script>
+            } catch (err) {
+                console.log('Registration error:', err);
+                respDiv.style.color = 'red';
+                respDiv.innerHTML = `<strong>❌ Error:</strong><br>Server error: ${err.message || 'Please try again.'}`;
+            }
+        });
+    </script>
 
 </body>
+
 </html>

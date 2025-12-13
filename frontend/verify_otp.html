@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Verify OTP - Online Voting System</title>
+<script src="config.js"></script>
 <style>
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -274,7 +275,7 @@ form.addEventListener('submit', async (e)=>{
     respDiv.innerHTML = "⏳ Verifying OTP...";
 
     try{
-        const res = await fetch('http://localhost:5000/api/auth/verify-otp', {
+        const res = await fetch(API_CONFIG.getEndpoint('/api/auth/verify-otp'), {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ aadhar, otp })
@@ -316,7 +317,7 @@ function resendOTP(){
     respDiv.style.color = '#004080';
     respDiv.innerHTML = "⏳ Requesting new OTP...";
 
-    fetch('http://localhost:5000/api/auth/resend-otp', {
+    fetch(API_CONFIG.getEndpoint('/api/auth/resend-otp'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ aadhar })

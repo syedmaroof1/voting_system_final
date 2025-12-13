@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Admin Panel - Online Voting System</title>
+<script src="config.js"></script>
 <style>
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -208,11 +209,11 @@ const candidateMap = {
 async function loadData() {
     try {
         // Fetch users
-        const usersRes = await fetch('http://localhost:5000/api/admin/users');
+        const usersRes = await fetch(API_CONFIG.getEndpoint('/api/admin/users'));
         const usersData = await usersRes.json();
         
         // Fetch vote results
-        const votesRes = await fetch('http://localhost:5000/api/admin/results');
+        const votesRes = await fetch(API_CONFIG.getEndpoint('/api/admin/results'));
         const votesData = await votesRes.json();
         
         // Populate users table

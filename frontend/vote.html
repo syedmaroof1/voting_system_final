@@ -305,6 +305,7 @@ body::before {
   <div id="response"></div>
 </div>
 
+<script src="config.js"></script>
 <script src="maharashtra_data.js"></script>
 <script src="district_candidates.js"></script>
 <script>
@@ -380,7 +381,7 @@ async function loadCandidates() {
     
     try {
         // Fetch candidates from database
-        const url = `http://localhost:5000/api/admin/candidates/district/${encodeURIComponent(district)}/taluka/${encodeURIComponent(taluka)}`;
+        const url = `${API_CONFIG.getBaseURL()}/api/admin/candidates/district/${encodeURIComponent(district)}/taluka/${encodeURIComponent(taluka)}`;
         console.log('Fetching from:', url);
         
         const response = await fetch(url);
@@ -584,7 +585,7 @@ async function vote(candidateId){
     const responseDiv = document.getElementById('response');
 
     try{
-        const res = await fetch('http://localhost:5000/api/vote/cast', {
+        const res = await fetch(API_CONFIG.getEndpoint('/api/vote/cast'), {
             method: 'POST',
             headers: {'Content-Type':'application/json'},
             body: JSON.stringify({ 

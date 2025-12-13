@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Test Flow - Voting System</title>
+<script src="config.js"></script>
 <style>
 body {
     font-family: Arial, sans-serif;
@@ -144,7 +145,7 @@ async function checkServer() {
     resultsDiv.innerHTML = '<p>Testing server...</p>';
     
     try {
-        const res = await fetch('http://localhost:5000/api/vote/results');
+        const res = await fetch(API_CONFIG.getEndpoint('/api/vote/results'));
         if(res.ok) {
             document.getElementById('serverStatus').innerHTML = '<span class="success">✅ Running</span>';
             resultsDiv.innerHTML = '<p class="success">✅ Server is running correctly!</p>';
