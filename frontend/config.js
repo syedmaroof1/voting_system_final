@@ -1,5 +1,8 @@
 // API Configuration
 const API_CONFIG = {
+    // Backend URL - Update this with your actual backend URL
+    PRODUCTION_BACKEND_URL: 'https://voting-system-final-backend.onrender.com',
+    
     // Detect if we're running locally or on a hosted environment
     getBaseURL: function() {
         // Check if we're on localhost
@@ -7,9 +10,8 @@ const API_CONFIG = {
             return 'http://localhost:5000';
         }
         
-        // For hosted environments, use environment variable or default
-        // You can set this to your Render backend URL
-        return window.API_BASE_URL || 'https://your-backend-app.onrender.com';
+        // For hosted environments, use the production URL
+        return window.API_BASE_URL || this.PRODUCTION_BACKEND_URL;
     },
     
     // Get full API endpoint

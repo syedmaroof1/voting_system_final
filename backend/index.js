@@ -9,7 +9,21 @@ const app = express();
 
 // Middlewares
 app.use(express.json());
-app.use(cors());
+
+// CORS configuration for production
+const corsOptions = {
+    origin: [
+        'http://localhost:3000',
+        'http://localhost:5000', 
+        'http://127.0.0.1:5500',
+        'https://voting-system-final.onrender.com',
+        'https://voting-system-final-backend.onrender.com'
+    ],
+    credentials: true,
+    optionsSuccessStatus: 200
+};
+
+app.use(cors(corsOptions));
 app.use(express.static(path.join(__dirname, '../frontend')));
 // Serve uploaded images
 app.use('/uploads', express.static(path.join(__dirname, '../frontend/uploads')));
@@ -24,6 +38,15 @@ app.use('/api/auth', authRoutes);
 app.use('/api/vote', voteRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/admin', candidatesRoutes);
+
+// Health check endpoint
+app.get('/api/health', (req, res) => {
+    res.json({ 
+        status: 'OK', 
+        message: 'Maharashtra Voting System Backend is running',
+        timestamp: new Date().toISOString()
+    });
+});
 
 // Serve index.html for root route
 app.get('/', (req, res) => {
